@@ -162,10 +162,6 @@ const handleEdit = async (data: any) => {
 // }
 //树节点被点击
 const treenodeclick = (data: any, node: any, component: any) => {
-    //   if (node.level == 3) {
-    //     this.catId = data.catId;
-    //     this.getDataList(); //重新查询
-    //   }
     console.log(data)
     queryParams.catelogId = data.catId
     console.log(queryParams)

@@ -24,3 +24,8 @@ export function attrEdit(params: Record<string, any>) {
 export function attrDeleteBatch(params: any) {
     return request.post({ url: '/product/attr/delBatch', params })
 }
+
+// 商品属性保存
+export function attrSave(params: any) {
+    return request.post({ url: '/product/attr/save', params })
+}
