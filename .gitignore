@@ -21,6 +21,7 @@ components.d.ts
 
 /cypress/videos/
 /cypress/screenshots/
+
 # Editor directories and files
 .idea
 *.suo
@@ -32,3 +33,6 @@ components.d.ts
 # .env
 .env.development
 .env.production
+
+# history
+.history/

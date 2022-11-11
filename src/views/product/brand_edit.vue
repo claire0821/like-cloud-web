@@ -73,7 +73,7 @@
 </template>
 <script lang="ts" setup>
 import type { FormInstance } from "element-plus";
-import { brandEdit, brandAdd, brandDetail } from "@/api/brand";
+import { brandEdit, brandAdd, brandDetail } from "@/api/product/brand";
 import Popup from "@/components/popup/index.vue";
 import feedback from "@/utils/feedback";
 import type { PropType } from "vue";

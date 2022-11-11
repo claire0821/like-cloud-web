@@ -25,8 +25,12 @@ export function categoryEdit(params: any) {
     return request.post({ url: '/product/category/edit', params })
 }
 
-
 // 更新节点
 export function categoryUpdateSort(params: any) {
     return request.post({ url: '/product/category/update/sort', params })
+}
+
+// 更新节点
+export function categoryUpdate(params: any) {
+    return request.post({ url: '/product/category/update', params })
 }
