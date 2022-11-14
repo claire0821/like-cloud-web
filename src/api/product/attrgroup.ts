@@ -39,3 +39,23 @@ export function listByCatelogId(params: Record<string, any>) {
 export function info(params: any) {
     return request.get({ url: '/product/attrgroup/info', params })
 }
+
+// 属性&根据分组id查找关联的所有基本属性
+export function attrRelation(params: number) {
+    return request.get({ url: '/product/attrgroup/attr/relation', params })
+}
+
+// 属性&获取当前分组没有关联的所有属性
+export function attrNoRelation(params: Record<string, any>) {
+    return request.get({ url: '/product/attrgroup/noattr/relation', params })
+}
+
+// 移除关联
+export function deleteRelation(params: any) {
+    return request.post({ url: '/product/attrgroup/attr/relation/delete', params })
+}
+
+// 新增关联
+export function addRelation(params: any) {
+    return request.post({ url: '/product/attrgroup/attr/addRelation', params })
+}

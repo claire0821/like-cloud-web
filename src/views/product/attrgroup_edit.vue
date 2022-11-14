@@ -29,7 +29,7 @@
                     <el-input v-model="formData.icon" placeholder="请输入组图标" />
                 </el-form-item>
                 <el-form-item label="所属分类" prop="catelogId">
-                    <category-cascader :catelogPath="catelogPath" />
+                    <category-cascader v-model:catelogPath="catelogPath"></category-cascader>
                 </el-form-item>
                 <!-- <el-form-item label="所属分类id" prop="catelogId">
                     <el-input v-model="formData.catelogId" placeholder="请输入所属分类id" />
@@ -115,6 +115,7 @@ const formRules = {
 const catelogPath = ref<any>()
 
 const handleSubmit = async () => {
+    formData.catelogId = catelogPath.value[catelogPath.value.length - 1]
     await formRef.value?.validate()
     const data: any = { ...formData }
     mode.value == 'edit' ? await groupEdit(data) : await groupAdd(data)

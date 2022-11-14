@@ -173,7 +173,7 @@
                                     v-perms="['attr:del']"
                                     type="danger"
                                     link
-                                    @click="handleDelete([row.attrId])"
+                                    @click="handleDelete([row])"
                                 >
                                     删除
                                 </el-button>
@@ -203,7 +203,7 @@ import feedback from '@/utils/feedback'
 import EditPopup from './attr_edit.vue'
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
 const showEdit = ref(false)
-const attrtype = ref(1)
+const attrtype = ref(0)
 const queryParams = reactive({
     attrName: '',
     searchType: '',
@@ -235,13 +235,12 @@ const handleEdit = async (data: any) => {
     editRef.value?.getDetail(data)
 }
 const handleSelectionChange = (val: any[]) => {
-    selectData.value = val.map(({ attrId }) => attrId)
+    selectData.value = val.map(({ attrGroupId }) => attrGroupId)
 }
 //批量删除
-const handleDelete = async (attrIds: any[] | number) => {
-    console.log(attrIds)
+const handleDelete = async (ids: any[] | number) => {
     await feedback.confirm('确定要删除？')
-    await attrDeleteBatch(attrIds)
+    await attrDeleteBatch(ids)
     feedback.msgSuccess('删除成功')
     getLists()
 }

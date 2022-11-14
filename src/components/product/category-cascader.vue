@@ -42,6 +42,7 @@ export default defineComponent({
 
         //向父组件更新
         const handleChange = (data: any) => {
+            console.log(data)
             emit('update:catelogPath', data)
         }
         getCategorys()

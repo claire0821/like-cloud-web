@@ -7,8 +7,8 @@
             <div class="index-lists">
                 <el-card class="!border-none" shadow="never">
                     <el-form ref="formRef" class="mb-[-16px]" :model="queryParams" :inline="true">
-                        <el-form-item label="参数名" prop="catelogId">
-                            <el-input v-model="queryParams.catelogId" clearable="" />
+                        <el-form-item label="参数名" prop="key">
+                            <el-input v-model="queryParams.key" clearable="" />
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="resetPage">查询</el-button>
@@ -18,18 +18,16 @@
                                 @click="handleDelete(selectData)"
                                 >批量删除</el-button
                             >
+                            <el-button v-perms="['group:add']" type="primary" @click="handleAdd()">
+                                <template #icon>
+                                    <icon name="el-icon-Plus" />
+                                </template>
+                                新增
+                            </el-button>
                         </el-form-item>
                     </el-form>
                 </el-card>
                 <el-card class="!border-none mt-4" shadow="never">
-                    <div>
-                        <el-button v-perms="['group:add']" type="primary" @click="handleAdd()">
-                            <template #icon>
-                                <icon name="el-icon-Plus" />
-                            </template>
-                            新增
-                        </el-button>
-                    </div>
                     <el-table
                         class="mt-4"
                         size="large"
@@ -40,6 +38,13 @@
                         <el-table-column
                             type="selection"
                             width="55"
+                            header-align="center"
+                            align="center"
+                        />
+                        <el-table-column
+                            label="分组id"
+                            prop="attrGroupId"
+                            min-width="100"
                             header-align="center"
                             align="center"
                         />
@@ -90,6 +95,14 @@
                                     v-perms="['group:edit']"
                                     type="primary"
                                     link
+                                    @click="relationHandle(row.attrGroupId)"
+                                >
+                                    关联
+                                </el-button>
+                                <el-button
+                                    v-perms="['group:edit']"
+                                    type="primary"
+                                    link
                                     @click="handleEdit(row)"
                                 >
                                     编辑
@@ -115,6 +128,8 @@
                     @success="getLists"
                     @close="showEdit = false"
                 />
+                <!-- 修改关联关系 -->
+                <relation-update v-if="relationVisible" ref="relationUpdate"></relation-update>
             </div>
         </el-col>
     </el-row>
@@ -125,7 +140,9 @@ import { groupDelete, groupLists } from '@/api/product/attrgroup'
 import { usePaging } from '@/hooks/usePaging'
 import feedback from '@/utils/feedback'
 import EditPopup from './attrgroup_edit.vue'
+import RelationUpdate from './attrgroup_relation.vue'
 const editRef = shallowRef<InstanceType<typeof EditPopup>>()
+const relationUpdate = shallowRef<InstanceType<typeof RelationUpdate>>()
 const showEdit = ref(false)
 const queryParams = reactive({
     attrGroupName: '',
@@ -136,6 +153,8 @@ const queryParams = reactive({
     key: ''
 })
 const selectData = ref<any[]>([])
+//关联窗口
+const relationVisible = ref(false)
 const { pager, getLists, resetPage, resetParams } = usePaging({
     fetchFun: groupLists,
     params: queryParams
@@ -176,6 +195,12 @@ const handleDelete = async (ids: any[] | number) => {
     await groupDelete(ids)
     feedback.msgSuccess('删除成功')
     getLists()
+}
+
+//关联
+const relationHandle = (groupId: number) => {
+    relationVisible.value = true
+    relationUpdate.value?.init(groupId)
 }
 getLists()
 </script>

@@ -45,7 +45,7 @@
                 <el-form-item label="所属分类" prop="catelogId">
                     <category-cascader v-model:catelogPath="catelogPath"></category-cascader>
                 </el-form-item>
-                <el-form-item label="所属分组" prop="attrGroupId" v-if="type == 1">
+                <el-form-item label="所属分组" prop="attrGroupId" v-if="props.type == 1">
                     <el-select
                         ref="groupSelect"
                         v-model="formData.attrGroupId"
@@ -59,7 +59,7 @@
                         ></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="可检索" prop="searchType" v-if="type == 1">
+                <el-form-item label="可检索" prop="searchType" v-if="props.type == 1">
                     <el-switch
                         v-model="formData.searchType"
                         active-color="#13ce66"
@@ -100,7 +100,7 @@ import Popup from '@/components/popup/index.vue'
 import feedback from '@/utils/feedback'
 import CategoryCascader from '@/components/product/category-cascader.vue'
 import type { PropType } from 'vue'
-defineProps({
+const props = defineProps({
     dictData: {
         type: Object as PropType<Record<string, any[]>>,
         default: () => ({})
@@ -124,7 +124,7 @@ const formData = reactive({
     searchType: '',
     icon: '',
     valueSelect: '',
-    attrType: '',
+    attrType: -1,
     enable: '',
     catelogId: '',
     showDesc: '',
@@ -213,6 +213,7 @@ const { pager, getLists, resetPage, resetParams } = usePaging({
 })
 
 const handleSubmit = async () => {
+    formData.catelogId = catelogPath.value[catelogPath.value.length - 1]
     await formRef.value?.validate()
     const data: any = { ...formData }
     console.log(data)
@@ -259,7 +260,10 @@ watch(catelogPath, async (val) => {
     attrGroups.value = pager.lists
     formData.catelogId = val[val.length - 1]
 })
-
+const init = () => {
+    formData.attrType = props.type
+}
+init()
 defineExpose({
     open,
     setFormData,
