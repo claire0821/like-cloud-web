@@ -33,3 +33,8 @@ export function relationDeleteBatch(params: any) {
 export function relationSave(params: Record<string, any>) {
     return request.post({ url: '/product/categorybrandrelation/save', params })
 }
+
+// 根据分类id查找品牌
+export function relationBrandsList(params: any) {
+    return request.get({ url: '/product/categorybrandrelation/brands/list', params })
+}

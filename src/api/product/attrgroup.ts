@@ -59,3 +59,8 @@ export function deleteRelation(params: any) {
 export function addRelation(params: any) {
     return request.post({ url: '/product/attrgroup/attr/addRelation', params })
 }
+
+// 获取当前分类下的所有属性分组和属性分组的所有属性
+export function getAttrGroupWithAttrs(params: any) {
+    return request.get({ url: '/product/attrgroup/withattr', params })
+}

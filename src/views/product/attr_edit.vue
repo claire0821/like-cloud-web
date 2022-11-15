@@ -94,7 +94,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'element-plus'
 import { usePaging } from '@/hooks/usePaging'
-import { attrEdit, attrSave, attrDetail } from '@/api/product/attr'
+import { attrUpdate, attrSave, attrDetail } from '@/api/product/attr'
 import { groupLists } from '@/api/product/attrgroup'
 import Popup from '@/components/popup/index.vue'
 import feedback from '@/utils/feedback'
@@ -218,7 +218,7 @@ const handleSubmit = async () => {
     const data: any = { ...formData }
     console.log(data)
     ;(data.valueSelect = formData.valueSelect.join(';')),
-        mode.value == 'edit' ? await attrEdit(data) : await attrSave(data)
+        mode.value == 'edit' ? await attrUpdate(data) : await attrSave(data)
     popupRef.value?.close()
     feedback.msgSuccess('操作成功')
     emit('success')
@@ -247,14 +247,14 @@ const getDetail = async (row: Record<string, any>) => {
         attrId: row.attrId
     })
     setFormData(data)
-    console.log(data)
 }
 
 const handleClose = () => {
     emit('close')
 }
 watch(catelogPath, async (val) => {
-    formData.attrGroupId = ''
+    // formData.attrGroupId = ''
+    //TODO: 初始化会导致attrGroupId清空
     queryParams.catelogId = val[val.length - 1]
     await getLists()
     attrGroups.value = pager.lists
