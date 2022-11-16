@@ -24,13 +24,13 @@
                         <el-form-item label="商品描述" prop="spuDescription">
                             <el-input v-model="spu.spuDescription"></el-input>
                         </el-form-item>
-                        <el-form-item label="选择分类" prop="catelogId">
+                        <el-form-item label="选择分类" prop="catalogId">
                             <category-cascader v-model:catelogPath="catelogPath" />
                         </el-form-item>
                         <el-form-item label="选择品牌" prop="brandId">
                             <brand-select
                                 v-model:brandId="brandId"
-                                v-model:catId="spu.catelogId"
+                                v-model:catId="spu.catalogId"
                             ></brand-select>
                         </el-form-item>
                         <el-form-item label="商品重量(Kg)" prop="weight">
@@ -408,6 +408,7 @@ import type { FormInstance } from 'element-plus'
 import { usePaging } from '@/hooks/usePaging'
 import { attrEdit, attrSave, attrDetail, attrLists } from '@/api/product/attr'
 import { groupLists, getAttrGroupWithAttrs } from '@/api/product/attrgroup'
+import { saveSpuInfo } from '@/api/product/spuinfo'
 import Popup from '@/components/popup/index.vue'
 import feedback from '@/utils/feedback'
 import CategoryCascader from '@/components/product/category-cascader.vue'
@@ -426,7 +427,7 @@ const spuBaseForm = shallowRef<FormInstance>()
 const spuBaseInfoRules = {
     spuName: [{ required: true, message: '请输入商品名字', trigger: 'blur' }],
     spuDescription: [{ required: true, message: '请编写一个简单描述', trigger: 'blur' }],
-    catelogId: [{ required: true, message: '请选择一个分类', trigger: 'blur' }],
+    catalogId: [{ required: true, message: '请选择一个分类', trigger: 'blur' }],
     brandId: [{ required: true, message: '请选择一个品牌', trigger: 'blur' }],
     decript: [{ required: true, message: '请上传商品详情图集', trigger: 'blur' }],
     images: [{ required: true, message: '请上传商品图片集', trigger: 'blur' }],
@@ -443,7 +444,7 @@ const spu = reactive({
     //要提交的数据
     spuName: '',
     spuDescription: '',
-    catelogId: -1,
+    catalogId: -1,
     brandId: '',
     weight: '',
     publishStatus: 0,
@@ -470,7 +471,7 @@ const collectSpuBaseInfo = () => {
 }
 //监听分类选择
 watch(catelogPath, async (val) => {
-    spu.catelogId = val[val.length - 1]
+    spu.catalogId = val[val.length - 1]
 })
 watch(brandId, async (val) => {
     spu.brandId = val
@@ -491,7 +492,7 @@ const dataResp = reactive({
 const showBaseAttrs = async () => {
     console.log(dataResp.steped[0])
     if (!dataResp.steped[0]) {
-        const data = await getAttrGroupWithAttrs({ catelogId: spu.catelogId })
+        const data = await getAttrGroupWithAttrs({ catalogId: spu.catalogId })
         console.log(data)
         for (const item of data) {
             console.log(item)
@@ -533,7 +534,7 @@ const generateSaleAttrs = () => {
 const inputVisible = ref<any[]>([])
 const inputValue = ref<any[]>([])
 const queryParams = reactive({
-    catelogId: -1,
+    catalogId: -1,
     attrType: 0
 })
 
@@ -545,7 +546,7 @@ const { pager, getLists, resetPage, resetParams } = usePaging({
 const getShowSaleAttr = async () => {
     if (!dataResp.steped[1]) {
         pager.size = 60
-        queryParams.catelogId = spu.catelogId
+        queryParams.catalogId = spu.catalogId
         await getLists()
         const data = toRaw(pager.lists)
         for (const item of data) {
@@ -709,6 +710,34 @@ const getDescartes = (list) => {
     }
 }
 //保存完成
-const submitSkus = () => {}
-defineExpose({})
+const submitSkus = async () => {
+    // console.log('~~~~~', JSON.stringify(spu))
+    await feedback.confirm('将要提交商品数据，需要一小段时间，是否继续?')
+    await saveSpuInfo(spu)
+    emit('success')
+    step.value = 4
+}
+//继续添加
+const addAgian = () => {
+    step.value = 0
+    resetSpuData()
+}
+const resetSpuData = () => {
+    spu = {
+        spuName: '',
+        spuDescription: '',
+        catalogId: 0,
+        brandId: '',
+        weight: '',
+        publishStatus: 0,
+        decript: [],
+        images: [],
+        bounds: {
+            buyBounds: 0,
+            growBounds: 0
+        },
+        baseAttrs: [],
+        skus: []
+    }
+}
 </script>

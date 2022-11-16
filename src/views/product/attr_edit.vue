@@ -220,7 +220,6 @@ const handleSubmit = async () => {
     ;(data.valueSelect = formData.valueSelect.join(';')),
         mode.value == 'edit' ? await attrUpdate(data) : await attrSave(data)
     popupRef.value?.close()
-    feedback.msgSuccess('操作成功')
     emit('success')
 }
 

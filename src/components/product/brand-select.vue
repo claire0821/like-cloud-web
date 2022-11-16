@@ -36,10 +36,9 @@ export default defineComponent({
             }
         )
         const getCatBrands = async () => {
-            if (props.catId < 0) {
-                return
+            if (props.catId > 0) {
+                brands.value = await relationBrandsList({ catId: props.catId })
             }
-            brands.value = await relationBrandsList({ catId: props.catId })
         }
 
         getCatBrands()
