@@ -138,11 +138,12 @@
     </div>
 </template>
 <script lang="ts" setup name="info">
-import { infoDeleteBatch, infoLists } from '@/api/product/spuinfo'
+import { infoDeleteBatch, infoLists, spuUp } from '@/api/product/spuinfo'
 import { usePaging } from '@/hooks/usePaging'
 import feedback from '@/utils/feedback'
 import CategoryCascader from '@/components/product/category-cascader.vue'
 import BrandSelect from '@/components/product/brand-select.vue'
+import { number } from 'echarts/core'
 const queryParams = reactive({
     spuName: '',
     spuDescription: '',
@@ -156,14 +157,22 @@ const catelogPath = ref<any>()
 const brandId = ref<any>()
 const catId = ref<any>()
 const selectData = ref<any[]>([])
+const router = useRouter()
 const { pager, getLists, resetPage, resetParams } = usePaging({
     fetchFun: infoLists,
     params: queryParams
 })
+//上架
+const productUp = async (id: number) => {
+    await spuUp({ id })
+}
 
-const productUp = async (id: number) => {}
-
-const attrUpdateShow = async (data: any) => {}
+const attrUpdateShow = async (row: any) => {
+    router.push({
+        path: '/product/spu/attrupdate',
+        query: { spuId: row.id, catalogId: row.catalogId }
+    })
+}
 const handleSelectionChange = (val: any[]) => {
     selectData.value = val.map(({ id }) => id)
 }

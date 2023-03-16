@@ -5,7 +5,8 @@ export enum LinkTypeEnum {
 
 export interface Link {
     path: string
-    name?: string
+    name: string
     type: string
+    image: string
     query?: Record<string, any>
 }

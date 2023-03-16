@@ -58,7 +58,7 @@ const activeLink = computed({
     }
 })
 
-const activeMenu = ref<string>(LinkTypeEnum.SHOP_PAGES)
+const activeMenu = ref<string>(LinkTypeEnum.SHOP_PAGES + '')
 
 const handleSelect = (index: string) => {
     activeMenu.value = index
@@ -72,6 +72,7 @@ watch(activeLink, (value) => {
 watch(
     () => props.modelValue,
     (value) => {
+        console.log(props.modelValue)
         activeMenu.value = value.type
         activeLink.value = value
     },

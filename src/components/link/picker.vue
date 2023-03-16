@@ -34,7 +34,7 @@ const emit = defineEmits<{
 }>()
 
 const popupRef = shallowRef<InstanceType<typeof Popup>>()
-const activeLink = ref<Link>({ path: '', type: LinkTypeEnum.SHOP_PAGES })
+const activeLink = ref<Link>({ path: '', type: LinkTypeEnum.SHOP_PAGES, name: '', icon: '' })
 const handleConfirm = () => {
     emit('update:modelValue', activeLink.value)
 }

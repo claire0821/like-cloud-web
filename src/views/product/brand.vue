@@ -5,16 +5,14 @@
                 <el-form-item label="品牌名" prop="name">
                     <el-input class="w-[280px]" v-model="queryParams.name" />
                 </el-form-item>
-                <el-form-item label="显示状态[0-不显示；1-显示]" prop="showStatus">
-                    <el-select v-model="queryParams.showStatus" class="w-[280px]" clearable>
-                        <el-option label="请选择字典生成" value="" />
+                <el-form-item label="显示状态">
+                    <el-select style="width: 160px" v-model="queryParams.showStatus" clearable>
+                        <el-option label="不显示" :value="0"></el-option>
+                        <el-option label="显示" :value="1"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="检索首字母" prop="firstLetter">
                     <el-input class="w-[280px]" v-model="queryParams.firstLetter" />
-                </el-form-item>
-                <el-form-item label="排序" prop="sort">
-                    <el-input class="w-[280px]" v-model="queryParams.sort" />
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="resetPage">查询</el-button>
@@ -36,12 +34,6 @@
                     header-align="center"
                     align="center"
                     width="50"
-                ></el-table-column>
-                <el-table-column
-                    prop="brandId"
-                    header-align="center"
-                    align="center"
-                    label="品牌id"
                 ></el-table-column>
                 <el-table-column
                     label="品牌名"

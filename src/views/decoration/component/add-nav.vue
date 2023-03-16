@@ -27,7 +27,7 @@
                         </div>
                         <div class="flex mt-[18px]">
                             <span class="text-tx-regular flex-none mr-3">链接</span>
-                            <link-picker v-model="item.link" />
+                            <link-picker v-model="item.link" @update:model-value="handleUpdate" />
                         </div>
                     </div>
                 </div>
@@ -39,6 +39,7 @@
     </div>
 </template>
 <script lang="ts" setup>
+import type { Link } from '@/components/link'
 import feedback from '@/utils/feedback'
 import type { PropType } from 'vue'
 
@@ -73,6 +74,46 @@ const handleDelete = (index: number) => {
         return feedback.msgError(`最少保留${props.min}个`)
     }
     props.modelValue.splice(index, 1)
+}
+const handleUpdate = (value: Link) => {
+    value = toRaw(value)
+    // console.log(value)
+    let index = -1
+    const item: any = {}
+    props.modelValue.every((val, idx, array) => {
+        const p = toRaw(val)
+        if (
+            p.link &&
+            p.link.name &&
+            p.link.name === value.name &&
+            p.link.path &&
+            p.link.path === value.path
+        ) {
+            Object.assign(item, p)
+            index = idx
+            return false
+        } else {
+            return true
+        }
+    })
+
+    console.log(item)
+    if (item) {
+        if (item.name || item.name.length <= 0 || item.name === '导航名称') {
+            item.name = value.name
+        }
+        if (item.image || item.image.length <= 0) {
+            item.image = value.image
+            if (item.image.indexOf('http') != -1) {
+                const startIndex = item.image.indexOf('api/')
+                if (startIndex != -1) {
+                    item.image = item.image.substring(startIndex, item.image.length)
+                }
+            }
+        }
+        props.modelValue.splice(index, 1, item)
+    }
+    console.log(props.modelValue)
 }
 </script>
 

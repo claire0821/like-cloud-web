@@ -34,3 +34,13 @@ export function attrSave(params: any) {
 export function attrUpdate(params: any) {
     return request.post({ url: '/product/attr/update', params })
 }
+
+// 查出商品的属性
+export function listforspu(params: any) {
+    return request.get({ url: '/product/attr/listforspu', params })
+}
+
+// 商品属性更新
+export function updateSpuAttr(params: any) {
+    return request.post({ url: '/product/attr/updateSpuAttr', params })
+}

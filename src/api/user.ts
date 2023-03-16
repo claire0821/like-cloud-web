@@ -25,3 +25,8 @@ export function getMenu() {
 export function setUserInfo(params: any) {
     return request.post({ url: '/system/admin/upInfo', params })
 }
+
+// 管理员列表
+export function userList() {
+    return request.get({ url: '/system/admin/userlists' })
+}

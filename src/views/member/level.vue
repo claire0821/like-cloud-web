@@ -5,32 +5,6 @@
                 <el-form-item label="等级名称" prop="name">
                     <el-input class="w-[280px]" v-model="queryParams.name" />
                 </el-form-item>
-                <el-form-item label="等级需要的成长值" prop="growthPoint">
-                    <el-input class="w-[280px]" v-model="queryParams.growthPoint" />
-                </el-form-item>
-                <el-form-item label="是否为默认等级[0->不是；1->是]" prop="defaultStatus">
-                    <el-select v-model="queryParams.defaultStatus" class="w-[280px]" clearable>
-                        <el-option label="请选择字典生成" value="" />
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="免运费标准" prop="freeFreightPoint">
-                    <el-input class="w-[280px]" v-model="queryParams.freeFreightPoint" />
-                </el-form-item>
-                <el-form-item label="每次评价获取的成长值" prop="commentGrowthPoint">
-                    <el-input class="w-[280px]" v-model="queryParams.commentGrowthPoint" />
-                </el-form-item>
-                <el-form-item label="是否有免邮特权" prop="priviledgeFreeFreight">
-                    <el-input class="w-[280px]" v-model="queryParams.priviledgeFreeFreight" />
-                </el-form-item>
-                <el-form-item label="是否有会员价格特权" prop="priviledgeMemberPrice">
-                    <el-input class="w-[280px]" v-model="queryParams.priviledgeMemberPrice" />
-                </el-form-item>
-                <el-form-item label="是否有生日特权" prop="priviledgeBirthday">
-                    <el-input class="w-[280px]" v-model="queryParams.priviledgeBirthday" />
-                </el-form-item>
-                <el-form-item label="备注" prop="note">
-                    <el-input class="w-[280px]" v-model="queryParams.note" />
-                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="resetPage">查询</el-button>
                     <el-button @click="resetParams">重置</el-button>
@@ -59,19 +33,48 @@
             >
                 <el-table-column type="selection" width="55" header-align="center" align="center" />
                 <el-table-column
-                    label="id"
-                    prop="id"
-                    min-width="100"
-                    header-align="center"
-                    align="center"
-                />
-                <el-table-column
                     label="等级名称"
                     prop="name"
                     min-width="100"
                     header-align="center"
                     align="center"
                 />
+                <el-table-column
+                    label="等级图标"
+                    min-width="100"
+                    header-align="center"
+                    align="center"
+                >
+                    <template #default="{ row }">
+                        <image-contain
+                            v-if="row.image"
+                            :src="row.image"
+                            :width="60"
+                            :height="45"
+                            :preview-src-list="[row.image]"
+                            preview-teleported
+                            fit="contain"
+                        />
+                    </template>
+                </el-table-column>
+                <el-table-column
+                    label="等级背景图片"
+                    min-width="100"
+                    header-align="center"
+                    align="center"
+                >
+                    <template #default="{ row }">
+                        <image-contain
+                            v-if="row.backgroundImage"
+                            :src="row.backgroundImage"
+                            :width="60"
+                            :height="45"
+                            :preview-src-list="[row.backgroundImage]"
+                            preview-teleported
+                            fit="contain"
+                        />
+                    </template>
+                </el-table-column>
                 <el-table-column
                     label="需要的成长值"
                     prop="growthPoint"
@@ -135,7 +138,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                        label="有生日特权"
+                        label="生日特权"
                         prop="priviledgeBirthday"
                         min-width="100"
                         header-align="center"

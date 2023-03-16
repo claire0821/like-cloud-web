@@ -89,10 +89,7 @@
                                                         />
                                                     </el-form-item>
                                                     <el-form-item label="链接地址">
-                                                        <link-picker
-                                                            v-model="element.link"
-                                                            :disabled="index == 0"
-                                                        />
+                                                        <link-picker v-model="element.link" />
                                                     </el-form-item>
                                                 </div>
                                             </del-wrap>
@@ -180,6 +177,9 @@ const handleDelete = (index: number) => {
 }
 
 const onMove = (e: any) => {
+    console.log(e)
+    console.log(e.relatedContext)
+    console.log(e.relatedContext.index)
     if (e.relatedContext.index == 0) {
         return false
     }

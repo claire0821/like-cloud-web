@@ -9,9 +9,25 @@
             @confirm="handleSubmit"
             @close="handleClose"
         >
-            <el-form ref="formRef" :model="formData" label-width="84px" :rules="formRules">
+            <el-form ref="formRef" :model="formData" label-width="150px" :rules="formRules">
                 <el-form-item label="等级名称" prop="name">
                     <el-input v-model="formData.name" placeholder="请输入等级名称" />
+                </el-form-item>
+                <el-form-item label="等级图标" prop="image">
+                    <div>
+                        <div>
+                            <material-picker v-model="formData.image" :limit="1" />
+                        </div>
+                        <div class="form-tips">建议尺寸：100*100像素，jpg，jpeg，png图片类型</div>
+                    </div>
+                </el-form-item>
+                <el-form-item label="等级背景图片" prop="image">
+                    <div>
+                        <div>
+                            <material-picker v-model="formData.backgroundImage" :limit="1" />
+                        </div>
+                        <div class="form-tips">建议尺寸：800*500像素，jpg，jpeg，png图片类型</div>
+                    </div>
                 </el-form-item>
                 <el-form-item label="所需成长值" prop="growthPoint">
                     <el-input-number v-model="formData.growthPoint" :min="0"></el-input-number>
@@ -27,7 +43,7 @@
                 <el-form-item label="免运费标准" prop="freeFreightPoint">
                     <el-input v-model="formData.freeFreightPoint" placeholder="请输入免运费标准" />
                 </el-form-item>
-                <el-form-item label="每次评价获取的成长值" prop="commentGrowthPoint">
+                <el-form-item label="评价获取成长值" prop="commentGrowthPoint">
                     <el-input-number
                         v-model="formData.commentGrowthPoint"
                         :min="0"
@@ -87,14 +103,16 @@ const popupTitle = computed(() => {
 const formData = reactive({
     id: '',
     name: '',
-    growthPoint: '',
+    growthPoint: 0,
     defaultStatus: 0,
-    freeFreightPoint: '',
-    commentGrowthPoint: '',
+    freeFreightPoint: 0,
+    commentGrowthPoint: 0,
     priviledgeFreeFreight: 0,
     priviledgeMemberPrice: 0,
     priviledgeBirthday: 0,
-    note: ''
+    note: '',
+    image: '',
+    backgroundImage: ''
 })
 
 const formRules = {

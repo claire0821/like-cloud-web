@@ -20,8 +20,12 @@ export function levelEdit(params: Record<string, any>) {
     return request.post({ url: '/member/level/edit', params })
 }
 
-
 // 会员等级批量删除
 export function levelDeleteBatch(params: any) {
     return request.post({ url: '/member/level/delBatch', params })
+}
+
+// 会员等级名称和id列表
+export function getLevel() {
+    return request.get({ url: '/member/level/getLevel' })
 }

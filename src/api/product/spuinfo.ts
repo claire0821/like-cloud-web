@@ -34,3 +34,13 @@ export function saveSpuInfo(params: any) {
 export function infoDeleteBatch(params: any) {
     return request.post({ url: '/product/spuinfo/delBatch', params })
 }
+
+// 商品上架
+export function spuUp(params: any) {
+    return request.get({ url: '/product/spuinfo/up', params })
+}
+
+// sku信息列表
+export function listWithImg(params?: Record<string, any>) {
+    return request.get({ url: '/product/spuinfo/listWithImg', params })
+}

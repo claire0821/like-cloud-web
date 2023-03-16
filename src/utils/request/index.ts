@@ -15,6 +15,18 @@ const axiosHooks: AxiosHooks = {
     requestInterceptorsHook(config) {
         NProgress.start()
         const { withToken, isParamsToData } = config.requestOptions
+        // 删除空参数
+        for (const key in config.params) {
+            if (
+                config.params[key] === '' ||
+                config.params[key] === null ||
+                config.params[key] === undefined ||
+                config.params[key].length === 0
+            ) {
+                delete config.params[key]
+            }
+        }
+
         const params = config.params || {}
         const headers = config.headers || {}
 
