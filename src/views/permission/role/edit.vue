@@ -67,12 +67,26 @@ const formData = reactive({
     menus: []
 })
 
+const checkSpecialKey = (rule: any, value: any, callback: any) => {
+    const specialKey = ':;'
+    for (let i = 0; i < value.length; i++) {
+        if (specialKey.indexOf(value.substr(i, 1)) != -1) {
+            callback(new Error('不能含有特殊符号:或者;'))
+        }
+    }
+    callback()
+}
+
 const rules = {
     name: [
         {
             required: true,
             message: '请输入名称',
             trigger: ['blur']
+        },
+        {
+            validator: checkSpecialKey,
+            trigger: 'blur'
         }
     ]
 }

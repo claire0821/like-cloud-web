@@ -3,7 +3,10 @@ import request from '@/utils/request'
 
 // 登录
 export function login(params: Record<string, any>) {
-    return request.post({ url: '/system/login', params: { ...params, terminal: config.terminal } })
+    return request.post({
+        url: '/auth/login',
+        params: { ...params, terminal: config.terminal, admin: true }
+    })
 }
 
 // 退出登录

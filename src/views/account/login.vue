@@ -124,7 +124,7 @@ onMounted(() => {
     background-image: url('./images/login_bg.png');
     @apply min-h-screen bg-no-repeat bg-center bg-cover;
     .login-card {
-        height: 400px;
+        height: 309px;
     }
 }
 </style>
