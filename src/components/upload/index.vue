@@ -81,7 +81,7 @@ export default defineComponent({
         const uploadRefs = shallowRef<InstanceType<typeof ElUpload>>()
         const action = ref(`${config.baseUrl}${config.urlPrefix}/common/upload/${props.type}`)
         const headers = computed(() => ({
-            token: userStore.token,
+            token: 'Like ' + userStore.token,
             version: config.version
         }))
         const visible = ref(false)
@@ -121,7 +121,7 @@ export default defineComponent({
         const getAccept = computed(() => {
             switch (props.type) {
                 case 'image':
-                    return '.jpj,.png,.gif,.jpeg,.ico,.bmp'
+                    return '.jpj,.jpg,.png,.gif,.jpeg,.ico,.bmp'
                 case 'video':
                     return '.wmv,.avi,.mov,.mp4,.flv,.rmvb'
                 default:
